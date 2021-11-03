@@ -7,6 +7,10 @@
 
 #include <cmath>
 
+#define
+#include "vector.h"
+#include "sprite.h"
+
 
 
 

@@ -1,4 +1,16 @@
-#include <SDL2/SDL.h>
+
+
+#if !defined(_WIN32) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)))
+    /* UNIX-style OS. ------------------------------------------- */
+  #include <SDL2/SDL.h>
+#else
+  #include <SDL.h>
+#endif
+
+
+
+
+
 
 constexpr int                windowWidth  = 800;
 constexpr int                windowHeight = 800;

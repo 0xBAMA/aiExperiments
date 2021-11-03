@@ -2,6 +2,9 @@
 
 class sprite{
 public:
-  sprite()  {}
-  ~sprite() {}
+  sprite();
+  ~sprite();
+
+private:
+  
 };

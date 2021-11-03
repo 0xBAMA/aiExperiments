@@ -1,17 +1,17 @@
-#if !defined(_WIN32) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)))
-/* UNIX-style OS. ------------------------------------------- */
-#include <SDL2/SDL.h>
+
+#define unixcheck !defined(_WIN32) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__)))
+
+#if unixcheck
+  #include <SDL2/SDL.h>
 #else
-#include <SDL.h>
+  #include <SDL.h>
 #endif
+
 
 #include <cmath>
 
-#define
 #include "vector.h"
 #include "sprite.h"
-
-
 
 
 constexpr int                windowWidth = 800;

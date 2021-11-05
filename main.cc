@@ -25,6 +25,8 @@ public:
     SDL_Init( SDL_INIT_EVERYTHING );
     window = SDL_CreateWindow( windowTitle, 0, 0, windowWidth, windowHeight, SDL_WINDOW_SHOWN );
     renderer = SDL_CreateRenderer( window, -1, 0 );
+
+    s.setRenderer( renderer );
     s.loadFromFile( "sprite.png" );
   }
 
@@ -39,7 +41,7 @@ public:
 
     SDL_SetRenderDrawColor( renderer, 0, 128 * std::sin( time / 100 ) + 128, 0, 255 );
     SDL_RenderClear( renderer );
-    s.draw( renderer );
+    s.draw();
     SDL_RenderPresent( renderer );
 
     return time < runTime; // break after you see the time exceed runTime
@@ -56,7 +58,7 @@ int main( int argc, char** argv ) {
 
   while( application.mainLoop() ) {
     // nothing, yet
-  };
+  }
 
   return 0;
 }

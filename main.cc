@@ -32,7 +32,7 @@ public:
     std::uniform_int_distribution<int> positionDistributionX( 0, windowWidth );
     std::uniform_int_distribution<int> positionDistributionY( 0, windowHeight );
 
-    s.resize( 5 );
+    s.resize( numSprites );
     for( auto& sprite : s ){
       sprite.setRenderer( renderer );
       sprite.loadFromFile( "sprite.png" );

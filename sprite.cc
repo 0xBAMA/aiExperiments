@@ -1,9 +1,9 @@
 #include "sprite.h"
 
 sprite::sprite() {
-  myPosition   = vector2< int >(100, 100);
-  myDimensions = vector2< int >(50, 50);
-  myRotation   = 30;
+  myPosition   = vector2< int >( 0, 0 );
+  myDimensions = vector2< int >( 0, 0 );
+  myRotation   = 0;
 }
 
 void sprite::loadFromFile( std::string fileName ) {

@@ -26,12 +26,21 @@ public:
     window = SDL_CreateWindow( windowTitle, 0, 0, windowWidth, windowHeight, SDL_WINDOW_SHOWN );
     renderer = SDL_CreateRenderer( window, -1, 0 );
 
+    std::default_random_engine generator;
+    std::uniform_int_distribution<int> dimensionDistribution( 100, 200 );
+    std::uniform_int_distribution<int> rotationDistribution( 0, 360 );
+    std::uniform_int_distribution<int> positionDistributionX( 0, windowWidth );
+    std::uniform_int_distribution<int> positionDistributionY( 0, windowHeight );
 
     s.resize( 5 );
-
     for( auto& sprite : s ){
       sprite.setRenderer( renderer );
       sprite.loadFromFile( "sprite.png" );
+
+      // square, of random edge length - randomly rotated, randomly positioned
+      sprite.setDimensions( vector2< int >( dimensionDistribution( generator ) ) );
+      sprite.setRotation( rotationDistribution( generator ) );
+      sprite.setPosition( vector2< int >( positionDistributionX( generator ), positionDistributionY( generator ) ) );
     }
   }
 

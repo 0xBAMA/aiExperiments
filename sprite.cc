@@ -1,10 +1,9 @@
-#include <iostream>
 #include "sprite.h"
 
 sprite::sprite() {
-  position = vector2< int >(0, 0);
-  dimensions = vector2< int >(0, 0);
-  rotation = 0;
+  myPosition   = vector2< int >(100, 100);
+  myDimensions = vector2< int >(50, 50);
+  myRotation   = 30;
 }
 
 void sprite::loadFromFile( std::string fileName ) {
@@ -16,7 +15,15 @@ void sprite::loadFromFile( std::string fileName ) {
 
 void sprite::draw(){
   if( texture == nullptr ) std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
-  SDL_RenderCopy( myRenderer, texture, NULL, NULL );
+
+  SDL_Rect whereToDraw;
+  whereToDraw.x = myPosition.values[ 0 ];
+  whereToDraw.y = myPosition.values[ 1 ];
+  whereToDraw.w = myDimensions.values[ 0 ];
+  whereToDraw.h = myDimensions.values[ 1 ];
+
+  // SDL_RenderCopy( myRenderer, texture, NULL, &whereToDraw );
+  SDL_RenderCopyEx( myRenderer, texture, NULL, &whereToDraw, myRotation, NULL, SDL_FLIP_NONE );
 }
 
 

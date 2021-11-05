@@ -27,7 +27,7 @@ private:
 	// sprite parameters
 	vector2< int > myPosition;
 	vector2< int > myDimensions;
-	float myRotation; // in degrees
+	float myRotation; // units are degrees
 
   SDL_Renderer* myRenderer;
 	SDL_Texture* texture;

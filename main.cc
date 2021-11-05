@@ -21,7 +21,7 @@
 
 class app {
 public:
-  app(int argc, char** argv) {
+  app( int argc, char** argv ){
     SDL_Init( SDL_INIT_EVERYTHING );
     window = SDL_CreateWindow( windowTitle, 0, 0, windowWidth, windowHeight, SDL_WINDOW_SHOWN );
     renderer = SDL_CreateRenderer( window, -1, 0 );
@@ -38,7 +38,8 @@ public:
       sprite.loadFromFile( "sprite.png" );
 
       // square, of random edge length - randomly rotated, randomly positioned
-      sprite.setDimensions( vector2< int >( dimensionDistribution( generator ) ) );
+      int dim = dimensionDistribution( generator );
+      sprite.setDimensions( vector2< int >( dim, dim / 2 ) );
       sprite.setRotation( rotationDistribution( generator ) );
       sprite.setPosition( vector2< int >( positionDistributionX( generator ), positionDistributionY( generator ) ) );
     }
@@ -69,10 +70,10 @@ public:
   std::vector< sprite > s;
   };
 
-int main( int argc, char** argv ) {
+int main( int argc, char** argv ){
   app application( argc, argv );
 
-  while( application.mainLoop() ) {
+  while( application.mainLoop() ){
     // nothing, yet
   }
 

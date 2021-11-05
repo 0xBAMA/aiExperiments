@@ -15,19 +15,21 @@ public:
 	sprite();
 	~sprite();
 
-	void setPosition( vector2< int > newPos )   { myPosition   = newPos;   }
-	void setRotation( float newRot )            { myRotation   = newRot;   }
-  void setDimensions( vector2< int > newDim ) { myDimensions = newDim;   }
-  void setRenderer( SDL_Renderer* renderer )  { myRenderer   = renderer; }
+	void setPosition( vector2< int > newPos )   { myPosition    = newPos;    }
+	void setRotation( float newRot )            { myRotation    = newRot;    }
+  void setDimensions( vector2< int > newDim ) { myDimensions  = newDim;    }
+  void setScaleFactor( float newScalar )      { myScaleFactor = newScalar; }
+  void setRenderer( SDL_Renderer* renderer )  { myRenderer    = renderer;  }
 
 	void loadFromFile( std::string fileName );
 	void draw();
 
 private:
 	// sprite parameters
-	vector2< int > myPosition;
-	vector2< int > myDimensions;
-	float myRotation; // units are degrees
+	vector2< int > myPosition;    // location of center
+	vector2< int > myDimensions; // load from texture
+	float myRotation;           // units are degrees
+  float myScaleFactor;       // uniform scaling on x and y
 
   SDL_Renderer* myRenderer;
 	SDL_Texture* texture;

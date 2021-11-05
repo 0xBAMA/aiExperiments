@@ -26,26 +26,39 @@ public:
     window = SDL_CreateWindow( windowTitle, 0, 0, windowWidth, windowHeight, SDL_WINDOW_SHOWN );
     renderer = SDL_CreateRenderer( window, -1, 0 );
 
-    std::default_random_engine generator;
-    std::uniform_int_distribution<int> dimensionDistribution( 100, 200 );
-    std::uniform_int_distribution<int> rotationDistribution( 0, 360 );
-    std::uniform_int_distribution<int> positionDistributionX( 0, windowWidth );
-    std::uniform_int_distribution<int> positionDistributionY( 0, windowHeight );
+    // seeding the PRNG
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
-    s.resize( numSprites );
+    // distributions for the PRNG
+    std::uniform_real_distribution< float > scalarDistribution( 0.01, 1. );
+    std::uniform_real_distribution< float > rotationDistribution( 0., 360. );
+    std::uniform_int_distribution< int > positionXDist( 0, windowWidth );
+    std::uniform_int_distribution< int > positionYDist( 0, windowHeight );
+
+    // create a vector of sprites and randomize the render parameters
+    // s.resize( numSprites );
+    s.resize( 1 );
     for( auto& sprite : s ){
+      // sprites now have a pointer to the renderer
       sprite.setRenderer( renderer );
+
+      // this now sets the base dimensions, directly from the texture data
       sprite.loadFromFile( "sprite.png" );
 
-      // square, of random edge length - randomly rotated, randomly positioned
-      int dim = dimensionDistribution( generator );
-      sprite.setDimensions( vector2< int >( dim, dim / 2 ) );
-      sprite.setRotation( rotationDistribution( generator ) );
-      sprite.setPosition( vector2< int >( positionDistributionX( generator ), positionDistributionY( generator ) ) );
+      // randomly sized, randomly rotated, randomly positioned
+      // sprite.setScaleFactor( scalarDistribution( gen ) );
+      // sprite.setRotation( rotationDistribution( gen ) );
+      // sprite.setPosition( vector2< int >( positionXDist( gen ), positionYDist( gen ) ) );
+
+      sprite.setScaleFactor( 1 );
+      sprite.setRotation( 0 );
+      sprite.setPosition( vector2< int >( windowWidth / 2, windowHeight / 2 ) );
     }
   }
 
   ~app() {
+    s.clear();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -57,8 +70,10 @@ public:
     SDL_SetRenderDrawColor( renderer, 0, 128 * std::sin( time / 100 ) + 128, 0, 255 );
     SDL_RenderClear( renderer );
 
-    for( auto& sprite : s )
+    for( auto& sprite : s ){
       sprite.draw();
+      sprite.setRotation( time * 0.1 );
+    }
 
     SDL_RenderPresent( renderer );
     return time < runTime; // break after you see the time exceed runTime

@@ -8,7 +8,7 @@ sprite::sprite() {
 }
 
 void sprite::loadFromFile( std::string fileName ) {
-  image = IMG_Load( "sprite.png" );
+  SDL_Surface* image = IMG_Load( "sprite.png" );
   if( image == NULL ) std::cout << "Error loading image: " << IMG_GetError() << std::endl;
   texture = SDL_CreateTextureFromSurface( myRenderer, image );
 }
@@ -22,5 +22,4 @@ void sprite::draw(){
 
 sprite::~sprite(){
   SDL_DestroyTexture( texture );
-  SDL_FreeSurface( image );
 }

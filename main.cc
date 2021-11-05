@@ -26,8 +26,13 @@ public:
     window = SDL_CreateWindow( windowTitle, 0, 0, windowWidth, windowHeight, SDL_WINDOW_SHOWN );
     renderer = SDL_CreateRenderer( window, -1, 0 );
 
-    s.setRenderer( renderer );
-    s.loadFromFile( "sprite.png" );
+
+    s.resize( 5 );
+
+    for( auto& sprite : s ){
+      sprite.setRenderer( renderer );
+      sprite.loadFromFile( "sprite.png" );
+    }
   }
 
   ~app() {
@@ -41,16 +46,18 @@ public:
 
     SDL_SetRenderDrawColor( renderer, 0, 128 * std::sin( time / 100 ) + 128, 0, 255 );
     SDL_RenderClear( renderer );
-    s.draw();
-    SDL_RenderPresent( renderer );
 
+    for( auto& sprite : s )
+      sprite.draw();
+
+    SDL_RenderPresent( renderer );
     return time < runTime; // break after you see the time exceed runTime
   }
 
   private:
   SDL_Window* window;
   SDL_Renderer* renderer;
-  sprite s;
+  std::vector< sprite > s;
   };
 
 int main( int argc, char** argv ) {

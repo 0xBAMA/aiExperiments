@@ -17,8 +17,8 @@ void sprite::draw(){
   if( texture == nullptr ) std::cout << "SDL_CreateTextureFromSurface Error: " << SDL_GetError() << std::endl;
 
   SDL_Rect whereToDraw;
-  whereToDraw.x = myPosition.values[ 0 ];
-  whereToDraw.y = myPosition.values[ 1 ];
+  whereToDraw.x = myPosition.values[ 0 ];     // x
+  whereToDraw.y = myPosition.values[ 1 ];     // y
   whereToDraw.w = myDimensions.values[ 0 ];
   whereToDraw.h = myDimensions.values[ 1 ];
 

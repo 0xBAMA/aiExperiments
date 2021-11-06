@@ -1,3 +1,6 @@
+#ifndef SDF
+#define SDF
+
 #include "vector.h"
 #include <cmath>
 
@@ -50,3 +53,5 @@ public:
 private:
   vector2< float > position2;
 };
+
+#endif

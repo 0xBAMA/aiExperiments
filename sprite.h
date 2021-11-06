@@ -1,3 +1,6 @@
+#ifndef SPRITE
+#define SPRITE
+
 #include "vector.h"
 #include <iostream>
 
@@ -9,6 +12,7 @@
   #include <SDL.h>
   #include <SDL_image.h>
 #endif
+#undef unixcheck
 
 class sprite {
 public:
@@ -34,3 +38,5 @@ private:
   SDL_Renderer* myRenderer;
 	SDL_Texture* texture;
 };
+
+#endif

@@ -2,6 +2,7 @@
 #define TRACK
 
 #include "windowDefines.h"
+#include <vector>
 #include "vector.h"
 #include "SDFs.h"
 
@@ -17,7 +18,18 @@
 
 class track{
 public:
-  float dQuery()
+  track();
+  ~track();
+
+  void draw();
+  float dQuery(); // to check distance - this will be used in the 2D raymarch
+
+private:
+
+  std::vector< SDF > primitives;
+  float distanceMap[ windowWidth ][ windowHeight ];
+  SDL_Texture * dTexture;
+
 }
 
 #endif

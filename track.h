@@ -25,11 +25,9 @@ public:
   float dQuery(); // to check distance - this will be used in the 2D raymarch
 
 private:
-
   std::vector< SDF > primitives;
   float distanceMap[ windowWidth ][ windowHeight ];
   SDL_Texture * dTexture;
-
 }
 
 #endif

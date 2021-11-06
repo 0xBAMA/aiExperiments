@@ -10,11 +10,11 @@
 #undef unixcheck
 
 
-
 #include <cmath>
 
 #include "vector.h"
 #include "sprite.h"
+#include "track.h"
 
 // window dimensions, etc
 #include "windowDefines.h"
@@ -25,6 +25,8 @@ public:
     SDL_Init( SDL_INIT_EVERYTHING );
     window = SDL_CreateWindow( windowTitle, 0, 0, windowWidth, windowHeight, SDL_WINDOW_SHOWN );
     renderer = SDL_CreateRenderer( window, -1, 0 );
+
+    t = new track( renderer );
 
     // seeding the PRNG
     std::random_device rd;
@@ -37,8 +39,7 @@ public:
     std::uniform_int_distribution< int > positionYDist( 0, windowHeight );
 
     // create a vector of sprites and randomize the render parameters
-    // s.resize( numSprites );
-    s.resize( 1 );
+    s.resize( numSprites );
     for( auto& sprite : s ){
       // sprites now have a pointer to the renderer
       sprite.setRenderer( renderer );
@@ -47,13 +48,9 @@ public:
       sprite.loadFromFile( "sprite.png" );
 
       // randomly sized, randomly rotated, randomly positioned
-      // sprite.setScaleFactor( scalarDistribution( gen ) );
-      // sprite.setRotation( rotationDistribution( gen ) );
-      // sprite.setPosition( vector2< int >( positionXDist( gen ), positionYDist( gen ) ) );
-
-      sprite.setScaleFactor( 1 );
-      sprite.setRotation( 0 );
-      sprite.setPosition( vector2< int >( windowWidth / 2, windowHeight / 2 ) );
+      sprite.setScaleFactor( scalarDistribution( gen ) );
+      sprite.setRotation( rotationDistribution( gen ) );
+      sprite.setPosition( vector2< int >( positionXDist( gen ), positionYDist( gen ) ) );
     }
   }
 
@@ -67,8 +64,10 @@ public:
   bool mainLoop() {
     int time = SDL_GetTicks(); // approximately equal to the number of ms since initialization
 
-    SDL_SetRenderDrawColor( renderer, 0, 128 * std::sin( time / 100 ) + 128, 0, 255 );
+    SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
     SDL_RenderClear( renderer );
+
+    t->draw();
 
     for( auto& sprite : s ){
       sprite.draw();
@@ -79,11 +78,12 @@ public:
     return time < runTime; // break after you see the time exceed runTime
   }
 
-  private:
+private:
   SDL_Window* window;
   SDL_Renderer* renderer;
   std::vector< sprite > s;
-  };
+  track* t = NULL;
+};
 
 int main( int argc, char** argv ){
   app application( argc, argv );

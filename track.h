@@ -4,7 +4,7 @@
 #include "windowDefines.h"
 #include <vector>
 #include "vector.h"
-#include "SDFs.h"
+#include "SDF.h"
 
 #define unixcheck (!defined(_WIN32) && (defined(__unix__) || defined(__unix) || (defined(__APPLE__) && defined(__MACH__))))
 #if unixcheck
@@ -16,18 +16,20 @@
 #endif
 #undef unixcheck
 
-class track{
+class track {
 public:
-  track();
+  track( SDL_Renderer* r );
   ~track();
 
+  float dQuery( vector2< float > queryPoint );
   void draw();
-  float dQuery(); // to check distance - this will be used in the 2D raymarch
 
 private:
-  std::vector< SDF > primitives;
+  SDL_Texture * myTexture;
+  SDL_Renderer * myRenderer;
+
+  std::vector< SDFBase > primitives;
   float distanceMap[ windowWidth ][ windowHeight ];
-  SDL_Texture * dTexture;
-}
+};
 
 #endif

@@ -5,7 +5,7 @@
 #include <cmath>
 
 // base class
-class SDF {
+class SDFBase {
 public:
   virtual float distance( vector2< float > p ) { return 1.0f; }
 };
@@ -14,22 +14,23 @@ public:
   // provide a constructor
   // overload the distance query function
 
-class circle : public SDF {
+class circle : public SDFBase {
 public:
-  circle( vector2< float > pos, float r );
+  circle( vector2< float > pos, float r ) : position( pos ), radius( r ) {}
   float distance( vector2< float > p );
 private:
   vector2< float > position;
   float radius;
 };
 
-class lineSegment : public SDF {
+class lineSegment : public SDFBase {
 public:
-  lineSegment( vector2< float > pos, vector2< float > pos2, float s );
+  lineSegment( vector2< float > p1, vector2< float > p2, float r ) : position1( p1 ), position2( p2 ), radius( r ) {}
   float distance( vector2< float > p );
 private:
+  vector2< float > position1;
   vector2< float > position2;
-  float scale;
+  float radius;
 };
 
 #endif

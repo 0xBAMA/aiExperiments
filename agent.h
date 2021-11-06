@@ -2,6 +2,7 @@
 #define AGENT
 
 #include "sprite.h"
+#include "track.h"
 
 // simple wrapper for now, but will contain more logic
   // neural network graph
@@ -10,10 +11,10 @@
 class agent {
 public:
   sprite mySprite;
-  
+  void setTrack( track* t ) { myTrack = t; }
 
 private:
-  track * myTrack;
+  track* myTrack = NULL;
 };
 
 #endif

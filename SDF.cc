@@ -11,5 +11,5 @@ float lineSegment::distance( vector2< float > p ){
   mm = ( mm > 1.0 ) ? 1.0 : ( mm < 0. ) ? 0.: mm;
 
   vector2< float > pos = ( position1 + AB * mm ) - p;
-  return sqrt( pos.values[ 0 ] * pos.values[ 0 ] + pos.values[ 1 ] * pos.values[ 1 ] ) - radius;
+  return ( negate ? -1.0f : 1.0f ) * ( len( pos ) - radius );
 }

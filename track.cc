@@ -3,20 +3,17 @@
 track::track( SDL_Renderer* r ) : myRenderer( r ) {
   // populate the array of primitives - this defines the shape of the track
     // this is totally arbitrary - start with random circles
-  primitives.push_back( circle( vector2< float >( 100., 100. ), 80. ) );
-  primitives.push_back( circle( vector2< float >( 200., 400. ), 20. ) );
+  primitives.push_back( new circle( vector2< float >( 100., 100. ), 80. ) );
+  primitives.push_back( new circle( vector2< float >( 200., 400. ), 20. ) );
+  primitives.push_back( new circle( vector2< float >( 600., 200. ), 200. ) );
 
   // produce the float array of distance values, to cache distance for all points on the map
   for( int x = 0; x < windowWidth;  x++ )
   for( int y = 0; y < windowHeight; y++ ){
-
-
-    // distanceMap[ x ][ y ] = 10000.0f;
-    distanceMap[ x ][ y ] = (x ^ y);
-
-    // for( auto primitive : primitives ) {  // compose all the primiives with the min() operator
-      // distanceMap[ x ][ y ] = std::min( primitive.distance( vector2< float >( x, y ) ), distanceMap[ x ][ y ] );
-    // }
+    distanceMap[ x ][ y ] = 10000.0f;
+    for( auto primitive : primitives ) {  // compose all the primiives with the min() operator
+      distanceMap[ x ][ y ] = std::min( std::clamp( primitive->distance( vector2< float >( x, y ) ), 0.0f, 255.0f ), distanceMap[ x ][ y ] );
+    }
   }
 
   // create the texture, for the SDL renderer display

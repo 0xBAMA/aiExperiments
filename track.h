@@ -1,8 +1,9 @@
 #ifndef TRACK
 #define TRACK
 
-#include "windowDefines.h"
 #include <vector>
+#include <algorithm> // std::clamp
+#include "windowDefines.h"
 #include "vector.h"
 #include "SDF.h"
 
@@ -28,7 +29,7 @@ private:
   SDL_Texture * myTexture;
   SDL_Renderer * myRenderer;
 
-  std::vector< SDFBase > primitives;
+  std::vector< SDFBase* > primitives;
   float distanceMap[ windowWidth ][ windowHeight ];
 };
 

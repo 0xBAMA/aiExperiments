@@ -8,6 +8,7 @@
 class SDFBase {
 public:
   virtual float distance( vector2< float > p ) { return 1.0f; }
+  virtual ~SDFBase() {}
 };
 
 // each of the inherited classes will need to do the following:

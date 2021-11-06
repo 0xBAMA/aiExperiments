@@ -3,7 +3,9 @@
 track::track( SDL_Renderer* r ) : myRenderer( r ) {
   // populate the array of primitives - this defines the shape of the track
     // this is totally arbitrary - start with random circles
-  // primitives.push_back( new circle( vector2< float >( 100., 100. ), 80., true ) );
+  std::vector< SDFBase* > primitives;
+
+  primitives.push_back( new circle( vector2< float >( 100., 100. ), 80., true ) );
   primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( 700., 100. ), 60., false ) );
   primitives.push_back( new lineSegment( vector2< float >( 700., 100. ), vector2< float >( 700., 700. ), 60., false ) );
   primitives.push_back( new lineSegment( vector2< float >( 700., 700. ), vector2< float >( 100., 700. ), 60., false ) );
@@ -18,6 +20,9 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
     }
   }
 
+  // destroy the SDFs, as they are no longer needed
+  for( auto& entry : primitives ) delete entry;
+
   // create the texture, for the SDL renderer display
   myTexture = SDL_CreateTexture( myRenderer, SDL_PIXELFORMAT_RGB888, SDL_TEXTUREACCESS_STATIC, windowWidth, windowHeight );
 
@@ -25,7 +30,7 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
   std::vector< unsigned char > v;
   for( int x = 0; x < windowWidth;  x++ )
   for( int y = 0; y < windowHeight; y++ )
-  for( int c = 0; c < 4; c++) // same data for all 3 color channels
+  for( int c = 0; c < 4; c++) // same data for all 4 color channels
     v.push_back( static_cast< unsigned char >( std::clamp( dQuery( vector2< float >( x, y ) ), 0.0f, 255.0f ) ) );
 
   // put it in the newly created texture

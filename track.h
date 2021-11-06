@@ -29,7 +29,6 @@ private:
   SDL_Texture * myTexture;
   SDL_Renderer * myRenderer;
 
-  std::vector< SDFBase* > primitives;
   float distanceMap[ windowWidth ][ windowHeight ];
 };
 

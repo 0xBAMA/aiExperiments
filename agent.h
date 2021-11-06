@@ -3,6 +3,7 @@
 
 #include "sprite.h"
 #include "track.h"
+#include "neuralNetwork.h"
 
 // simple wrapper for now, but will contain more logic
   // neural network graph
@@ -15,6 +16,7 @@ public:
 
 private:
   track* myTrack = NULL;
+  neuralNetwork brain;
 };
 
 #endif

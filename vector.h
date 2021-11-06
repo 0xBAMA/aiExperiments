@@ -65,8 +65,9 @@ T len( vector2< T > v ) { return sqrt( len2( v ) ); }
 template < class T > // return unit length colinear vector
 vector2< T > normalize( vector2< T > in ) { T length = len( in ); return in / length; }
 
-template < class T > // rotate the 2d vector, by specified number degrees
-vector2< T > rotate( vector2< T > in, double amt ) { /* rotate the 2d vector by the specified number of degrees */ }
+// rotate the 2d vector, by specified number degrees - need to write this, since we're not doing matrices
+// template < class T >
+// vector2< T > rotate( vector2< T > in, double amt ) { /* rotate the 2d vector by the specified number of degrees */ }
 
 // --------
 // --------
@@ -141,5 +142,8 @@ template < class T > // reflect function
 const vector3< T > reflect( vector3< T > i, vector3< T > n ){
   return i - 2.0 * dot( n, i ) * n;
 }
+
+// refract function would make sense to add
+// some of the other demoscene type rotation implementations might make sense as well
 
 #endif

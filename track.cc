@@ -3,9 +3,9 @@
 track::track( SDL_Renderer* r ) : myRenderer( r ) {
   // populate the array of primitives - this defines the shape of the track
     // this is totally arbitrary - start with random circles
-  primitives.push_back( new circle( vector2< float >( 100., 100. ), 80. ) );
-  primitives.push_back( new circle( vector2< float >( 200., 400. ), 20. ) );
-  primitives.push_back( new circle( vector2< float >( 600., 200. ), 200. ) );
+  // primitives.push_back( new circle( vector2< float >( 100., 100. ), 80., true ) );
+  primitives.push_back( new circle( vector2< float >( 300., 300. ), 200., true ) );
+  primitives.push_back( new circle( vector2< float >( 200., 400. ), 200., false ) );
 
   // produce the float array of distance values, to cache distance for all points on the map
   for( int x = 0; x < windowWidth;  x++ )

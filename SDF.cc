@@ -1,7 +1,7 @@
 #include "SDF.h"
 
 float circle::distance( vector2< float > p ){
-  return len( p - position ) - radius;
+  return ( negate ? -1.0f : 1.0f ) * ( len( p - position ) - radius );
 }
 
 float lineSegment::distance( vector2< float > p ){

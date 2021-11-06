@@ -10,7 +10,10 @@
 class agent {
 public:
   sprite mySprite;
+  
 
+private:
+  track * myTrack;
 };
 
 #endif

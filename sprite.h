@@ -25,6 +25,10 @@ public:
   void setScaleFactor( float newScalar )      { myScaleFactor = newScalar; }
   void setRenderer( SDL_Renderer* renderer )  { myRenderer    = renderer;  }
 
+  SDL_Renderer* getRenderer()  { return myRenderer; }
+  vector2< int > getPosition() { return myPosition; }
+  float getRotation()          { return myRotation; }
+
 	void loadFromFile( std::string fileName );
 	void draw();
 

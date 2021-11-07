@@ -5,7 +5,7 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
     // this is totally arbitrary - start with random circles
   std::vector< SDFBase* > primitives;
 
-  primitives.push_back( new circle( vector2< float >( 100., 100. ), 80., true ) );
+  primitives.push_back( new circle( vector2< float >( 400., 400. ), 150., false ) );
   primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( 700., 100. ), 60., false ) );
   primitives.push_back( new lineSegment( vector2< float >( 700., 100. ), vector2< float >( 700., 700. ), 60., false ) );
   primitives.push_back( new lineSegment( vector2< float >( 700., 700. ), vector2< float >( 100., 700. ), 60., false ) );

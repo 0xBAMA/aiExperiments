@@ -32,7 +32,7 @@ app::app( int argc, char** argv ) {
     agent.mySprite.loadFromFile( "sprite.png" );
 
     // randomly sized, randomly rotated, randomly positioned
-    agent.mySprite.setScaleFactor( scalarDistribution( gen ) );
+    agent.mySprite.setScaleFactor( 0.1618f );
     agent.mySprite.setRotation( rotationDistribution( gen ) );
     agent.mySprite.setPosition( vector2< int >( positionXDist( gen ), positionYDist( gen ) ) );
   }
@@ -51,7 +51,9 @@ bool app::mainLoop(){
 
   // iterate through list of agents, and draw their associated sprites
   for( auto& agent : agents ){
-    agent.mySprite.draw();
+    // agent.mySprite.draw();
+    agent.raymarchDistances();
+    agent.draw();
     agent.mySprite.setRotation( time * 0.1 );
   }
 

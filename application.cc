@@ -65,6 +65,25 @@ bool app::mainLoop(){
   while( SDL_PollEvent( &event ) ){
     if( event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE )
       return false; // terminate on release of escape key
+
+    // picking
+    if( event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT ){
+      // find the nearest agent to the mouse location
+      // toggle the selection state of the nearest agent, if it's within a threshold
+      vector2< float >clickPos( event.button.x, event.button.y );
+      float minDistance = 10000.0f;
+      int pick = -1;
+      for( unsigned int i = 0; i < agents.size(); i++ ) {
+        float d = len( agents[ i ].getPosition() - clickPos );
+        if( d < minDistance ){
+          minDistance = d;
+          pick = i;
+        }
+      }
+      if( minDistance < 16 && pick >= 0 ){
+        agents[ pick ].toggleSelected();
+      }
+    }
   }
 
   // if you fall through the event loop, continue

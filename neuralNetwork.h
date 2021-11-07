@@ -3,44 +3,44 @@
 
 #include <vector>
 
-class edge; // forward declare
-
-class node{
-public:
-  node() {}
-  ~node() {}
-
-  void setValue( float v ) { value = v; }
-  float getValue()         { return value; }
-
-private:
-  float value;
-};
-
-class edge{
-public:
-  edge() {}
-  ~edge() {}
-
-  void setWeight( float w ) { weight = w; }
-  float getWeight( )        { return weight; }
-
-private:
-  float weight;
-  node* sourceNode;  // source of directed link
-  node* targetNode; // destination of link
-};
-
+// class neuron{
+// public:
+//   std::vector< float > weights;
+//
+// };
+//
+// class layer{
+// public:
+//   int size(){ return weights.size(); }
+//
+// private:
+//   layer* prevlayer;
+//   std::vector< neuron > neurons;
+//   float bias;
+// };
+//
 class neuralNetwork{
-public:
-  neuralNetwork() {}
-  ~neuralNetwork() {}
-
-  void setInput( float minus90, float minus45, float zero, float plus45, float plus90 ) { /* to do - this is updating the input neuron */ }
-
-private:
-  std::vector< node > neurons;
-  std::vector< edge > connections;
+// public:
+//   neuralNetwork() {}
+//   ~neuralNetwork() {}
+//
+//   // load all layers from the file, intact
+//   void loadWeightsFromFile( std::string filename );
+//
+//   // save all the layer weights + biases
+//   void saveWeightsToFile( std::string filename );
+//
+//   // randomize weights, biases with values in the range [ -bump, bump ]
+//   void loadWeightsFromFileAndBump( std::string filename, float bump );
+//
+//   // generate completely random weights and biases in the range [ -range, range ]
+//   void generateRandomWeights( float range );
+//
+//   // update the input neurons (this is the first layer)
+//   void setInput( float minus90, float minus45, float zero, float plus45, float plus90, float speed ) {}
+//
+// private:
+//   std::vector< layer > network;
 };
 
 #endif

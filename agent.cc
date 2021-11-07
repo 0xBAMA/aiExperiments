@@ -59,13 +59,20 @@ void agent::draw(){
   drawRect = { dx - 2, dy - 2, 4, 4 };
   SDL_RenderDrawRect( r, &drawRect );
 
+  if( selected ){
+    drawRect = { sx - 10, sy - 10, 20, 20 };
+    SDL_SetRenderDrawColor( r, 255, 0, 0, 255 );
+    SDL_RenderDrawRect( r, &drawRect );
+  }
+
   // draw the sprite over the lines
+  mySprite.setScaleFactor( 0.1618f );
   mySprite.draw();
 }
 
 float agent::raymarchVector( vector2< float > origin, vector2< float > direction ){
   float distance = 0., t = 0.;
-  for( int i = 0; i < 100; i++ ){
+  for( int i = 0; i < 10; i++ ){
     distance = myTrack->dQuery( origin + t * direction );
     t += distance;
     if( t > 1000. || distance < 0. )

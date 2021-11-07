@@ -5,11 +5,11 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
     // this is totally arbitrary - start with random circles
   std::vector< SDFBase* > primitives;
 
-  primitives.push_back( new circle( vector2< float >( 400., 400. ), 150., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( 700., 100. ), 60., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 700., 100. ), vector2< float >( 700., 700. ), 60., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 700., 700. ), vector2< float >( 100., 700. ), 60., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 100., 700. ), vector2< float >( 100., 100. ), 60., false ) );
+  primitives.push_back( new circle( vector2< float >( windowWidth / 2., windowHeight / 2. ), 150., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( windowWidth - 100., 100. ), 60., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., 100. ), vector2< float >( windowWidth - 100., windowHeight - 100 ), 60., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., windowHeight - 100 ), vector2< float >( 100., windowHeight - 100 ), 60., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( 100., windowHeight - 100 ), vector2< float >( 100., 100. ), 60., false ) );
 
   // produce the float array of distance values, to cache distance for all points on the map
   for( int x = 0; x < windowWidth;  x++ )
@@ -28,8 +28,8 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
 
   // create the texture data
   std::vector< unsigned char > v;
-  for( int x = 0; x < windowWidth;  x++ )
   for( int y = 0; y < windowHeight; y++ )
+  for( int x = 0; x < windowWidth;  x++ )
   for( int c = 0; c < 4; c++) // same data for all 4 color channels
     v.push_back( static_cast< unsigned char >( std::clamp( dQuery( vector2< float >( x, y ) ), 0.0f, 255.0f ) ) );
 

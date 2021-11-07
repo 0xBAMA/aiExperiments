@@ -15,7 +15,12 @@ public:
 
   void draw();
   void setTrack( track* t ) { myTrack = t; }
+
+  vector2< float > getPosition(){ return vector2< float >( mySprite.getPosition().values[ 0 ], mySprite.getPosition().values[ 1 ] ); }
+
   void raymarchDistances();
+
+  void toggleSelected(){ selected = !selected; }
 
 private:
   float raymarchVector( vector2< float > origin, vector2< float > direction );
@@ -23,6 +28,8 @@ private:
 
   track* myTrack = NULL;
   neuralNetwork brain;
+
+  bool selected = false;
 };
 
 #endif

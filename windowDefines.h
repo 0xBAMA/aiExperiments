@@ -1,8 +1,8 @@
 #ifndef WINDEF
 #define WINDEF
 
-constexpr int                windowWidth = 800;
-constexpr int                windowHeight = 800;
+constexpr int                windowWidth = 1500;
+constexpr int                windowHeight = 900;
 constexpr static const char* windowTitle = "Neural Network Racecar Simulation";
 constexpr int                numAgents = 9;
 

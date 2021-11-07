@@ -1,5 +1,17 @@
 #include "agent.h"
 
+void agent::update(){
+
+  
+
+  if( myD < 0.){
+    // oh, I'm die - thank you forever
+    // forever die, forever fly
+
+
+  }
+}
+
 void agent::draw(){
   SDL_Renderer * r = mySprite.getRenderer();
 
@@ -63,10 +75,12 @@ void agent::draw(){
     drawRect = { sx - 10, sy - 10, 20, 20 };
     SDL_SetRenderDrawColor( r, 255, 0, 0, 255 );
     SDL_RenderDrawRect( r, &drawRect );
+    mySprite.setScaleFactor( 0.2617f );
+  }else{
+    mySprite.setScaleFactor( 0.1618f );
   }
 
   // draw the sprite over the lines
-  mySprite.setScaleFactor( 0.1618f );
   mySprite.draw();
 }
 
@@ -84,6 +98,8 @@ float agent::raymarchVector( vector2< float > origin, vector2< float > direction
 void agent::raymarchDistances(){
   vector2< float > origin = vector2< float >( mySprite.getPosition().values[ 0 ], mySprite.getPosition().values[ 1 ] );
   vector2< float > direction = rotate2D( vector2< float >( 1, 0 ), mySprite.getRotation() );
+
+  myD = myTrack->dQuery( origin );
 
   m90  = raymarchVector( origin, normalize( rotate2D( direction, -90 ) ) );
   m45  = raymarchVector( origin, normalize( rotate2D( direction, -45 ) ) );

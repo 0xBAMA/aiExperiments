@@ -40,7 +40,10 @@ app::app( int argc, char** argv ) {
 
 bool app::mainLoop(){
   // approximately equal to the number of ms since initialization
-  int time = SDL_GetTicks();
+  // int time = SDL_GetTicks();
+
+  // pause function, prevents the agent update function from running
+  static bool runSim = true;
 
   // clear framebuffer to opaque black
   SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
@@ -51,10 +54,13 @@ bool app::mainLoop(){
 
   // iterate through list of agents, and draw their associated sprites
   for( auto& agent : agents ){
-    // agent.mySprite.draw();
-    agent.raymarchDistances();
+    if( runSim ){
+      // agent.mySprite.setRotation( time * 0.1 );
+      agent.rotationAdjust( 0.1 );
+      agent.raymarchDistances();
+      // agent.update();
+    }
     agent.draw();
-    agent.mySprite.setRotation( time * 0.1 );
   }
 
   // present the accumulated state of the renderer to the viewer
@@ -65,6 +71,9 @@ bool app::mainLoop(){
   while( SDL_PollEvent( &event ) ){
     if( event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE )
       return false; // terminate on release of escape key
+
+    if( event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_SPACE )
+      runSim = !runSim;
 
     // picking
     if( event.type == SDL_MOUSEBUTTONUP && event.button.button == SDL_BUTTON_LEFT ){

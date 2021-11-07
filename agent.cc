@@ -1,14 +1,43 @@
 #include "agent.h"
 
+
+#include <random>
+#include <iostream>
+std::string randomString( std::size_t length ){
+    const std::string CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    std::random_device random_device;
+    std::mt19937 generator(random_device());
+    std::uniform_int_distribution<> distribution(0, CHARACTERS.size() - 1);
+
+    std::string random_string;
+    for( std::size_t i = 0; i < length; ++i ){
+      random_string += CHARACTERS[distribution(generator)];
+    }
+
+    return random_string;
+}
+
+agent::agent( std::string filename, track* t, SDL_Renderer* r, float scale, float rot, vector2< int >location ){
+  mySprite.setRenderer( r );
+  mySprite.loadFromFile( filename );
+  mySprite.setScaleFactor( scale );
+  mySprite.setRotation( rot );
+  mySprite.setPosition( location );
+
+  tag = randomString( 10 );
+
+  setTrack( t );
+}
+
 void agent::update(){
+  if( dead ) return;
+  updatesSurvived++;
 
-  
+  mySprite.setPosition( mySprite.getPosition() + speed * rotate2D( vector2< float >( 1, 0), mySprite.getDirection() ) );
 
-  if( myD < 0.){
-    // oh, I'm die - thank you forever
-    // forever die, forever fly
-
-
+  if( myD <= 0.){
+    dead = true; // forever die, forever fly
+    brain.saveWeightsToFile( std::string( "records/" ) + std::to_string( updatesSurvived ) + std::string( "_" ) + tag );
   }
 }
 

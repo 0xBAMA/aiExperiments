@@ -14,27 +14,14 @@ app::app( int argc, char** argv ) {
   std::mt19937 gen(rd());
 
   // distributions for the PRNG
-  std::uniform_real_distribution< float > scalarDistribution( 0.01, 1. );
-  std::uniform_real_distribution< float > rotationDistribution( 0., 360. );
+  std::uniform_real_distribution< float > scalarDist( 0.01, 1. );
+  std::uniform_real_distribution< float > rotationDist( 0.0, 360.0 );
   std::uniform_int_distribution< int > positionXDist( 0, windowWidth );
   std::uniform_int_distribution< int > positionYDist( 0, windowHeight );
 
-  // create a vector of sprites and randomize the render parameters
-  agents.resize( numAgents );
-  for( auto& agent : agents ) {
-    // pass reference to the track, so that the sim agent can reference it
-    agent.setTrack( myTrack );
-
-    // agent's sprites have a pointer to the renderer
-    agent.mySprite.setRenderer( renderer );
-
-    // this now sets the base dimensions, directly from the texture data
-    agent.mySprite.loadFromFile( "sprite.png" );
-
-    // randomly sized, randomly rotated, randomly positioned
-    agent.mySprite.setScaleFactor( 0.1618f );
-    agent.mySprite.setRotation( rotationDistribution( gen ) );
-    agent.mySprite.setPosition( vector2< int >( positionXDist( gen ), positionYDist( gen ) ) );
+  for( int i = 0; i < numAgents; i++ ){
+    agent a( "sprite.png", myTrack, renderer, 0.1618f, rotationDist( gen ), vector2< int >( positionXDist( gen ), positionYDist( gen ) ) );
+    agents.push_back(a);
   }
 }
 

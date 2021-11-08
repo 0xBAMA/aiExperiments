@@ -65,7 +65,7 @@ T len( vector2< T > v ) { return sqrt( len2( v ) ); }
 template < class T > // return unit length colinear vector
 vector2< T > normalize( vector2< T > in ) { T length = len( in ); return in / length; }
 
-// rotate the 2d vector, by specified number degrees - need to write this, since we're not doing matrices
+// rotate the 2d vector, by specified number degrees
 template < class T >
 vector2< T > rotate2D( vector2< T > in, double amt ) {
   double radians = ( pi / 180. ) * amt;

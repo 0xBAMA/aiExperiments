@@ -43,7 +43,7 @@ bool app::mainLoop(){
   for( auto& agent : agents ){
     if( runSim ){
       // agent.mySprite.setRotation( time * 0.1 );
-      agent.rotationAdjust( 0.1 );
+      agent.rotationAdjust( 0.01 );
       agent.raymarchDistances();
       agent.update();
     }

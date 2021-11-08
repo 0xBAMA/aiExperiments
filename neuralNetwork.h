@@ -49,9 +49,6 @@ public:
   // save all the layer weights + biases
   void saveWeightsToFile( std::string filename );
 
-  // randomize weights, biases with values in the range [ -bump, bump ]
-  void loadWeightsFromFileAndBump( std::string filename, float bump );
-
   // generate completely random weights and biases in the range [ -range, range ]
   void generateRandomWeights( float range );
 
@@ -64,6 +61,8 @@ public:
   // outputs
   float speedAdjust;
   float rotationAdjust;
+
+  float adjustScalar = 0.1;
 
 private:
   std::vector< layer* > network;

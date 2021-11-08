@@ -4,9 +4,7 @@ void neuron::computeOutput(){
   float sum = 0.0f; // compute the weighted sum
   for( int i = 0; i < input->size(); i++ )
     sum += input->getOutput( i ) * weights[ i ];
-
-  // add bias
-  output = sum + bias;
+  output = sum + bias; // add bias + store output
 }
 
 void layer::init( int n ){
@@ -63,13 +61,12 @@ neuralNetwork::neuralNetwork(){
 
 void neuralNetwork::evaluate(){
   // propagate forwards - input to first hidden layer, first to second, etc
-  for( int i = 1; i < 6; i++ ){
+  for( int i = 1; i < 6; i++ )
     network[ i ]->evaluate(); // evaluate, in order - start at 1, because 0 contains the input
-  }
 
   // put the output of the final layer into these publicly accessible floats
-  speedAdjust =    std::clamp( network[ 5 ]->getOutput( 0 ), -1.0f, 1.0f );
-  rotationAdjust = std::clamp( network[ 5 ]->getOutput( 1 ), -1.0f, 1.0f );
+  speedAdjust =    std::clamp( network[ 5 ]->getOutput( 0 ), -1.0f * adjustScalar, 1.0f * adjustScalar );
+  rotationAdjust = std::clamp( network[ 5 ]->getOutput( 1 ), -1.0f * adjustScalar, 1.0f * adjustScalar );
 }
 
 void neuralNetwork::generateRandomWeights( float range ){
@@ -77,7 +74,6 @@ void neuralNetwork::generateRandomWeights( float range ){
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_real_distribution< float > d( -range, range );
-
   for( int i = 1; i < 6; i++ ){
     for( int j = 0; j < network[ i ]->size(); j++ ){
       network[ i ]->neurons[ j ].bias = d( gen );
@@ -99,4 +95,20 @@ void neuralNetwork::visualize(){
     }
     std::cout << std::endl << std::endl;
   }
+}
+
+void saveWeightsToFile( std::string filename ){
+  // encode as json
+}
+
+void loadWeightsFromFile( std::string filename ){
+  // load from json
+}
+
+void weightBump( float bump ){
+  // take existing weights and add a random quantity in the range [ -bump, bump ]
+}
+
+void setInput( float minus90, float minus45, float zero, float plus45, float plus90, float speed, float rotation ){
+  // store these 7 values in the output fields of the 7 neurons in the input layer
 }

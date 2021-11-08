@@ -30,6 +30,9 @@ void agent::update(){
   if( dead ) return;
 
   updatesSurvived++;
+  brain.setInput( m90, m45, zero, p45, p90, speed, mySprite->getRotation() );
+  brain.evaluate();
+
   mySprite->setPosition( mySprite->getPosition() + speed * rotate2D( vector2< float >( 1, 0), mySprite->getRotation() ) );
 
   if( myD <= 0.){ // I'm die, thank you forever

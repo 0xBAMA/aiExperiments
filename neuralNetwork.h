@@ -2,26 +2,46 @@
 #define NNETWORK
 
 #include <vector>
+#include <random>
+#include <algorithm>
+#include <iostream>
+
+class layer;
 
 class neuron{
 public:
+  float output = 0.;
+  void computeOutput();
+
+  layer* input;
+
   std::vector< float > weights;
   float bias;
 };
 
+
+
 class layer{
 public:
-  int size(){ return neurons.size(); }
+  int size()      { return neurons.size(); }
+  void init( int n );
+  void setPrev( layer* p );
 
-private:
-  layer* prevlayer;
+  void evaluate();
+  float getOutput( int n ){ return neurons[ n ].output; }
+
   std::vector< neuron > neurons;
 };
 
+
+
 class neuralNetwork{
 public:
-  neuralNetwork() {}
-  ~neuralNetwork() {}
+  neuralNetwork();
+  ~neuralNetwork(){}
+
+  // visualize layer biases and weights
+  void visualize();
 
   // load all layers from the file, intact
   void loadWeightsFromFile( std::string filename );
@@ -36,10 +56,17 @@ public:
   void generateRandomWeights( float range );
 
   // update the input neurons (this is the first layer)
-  void setInput( float minus90, float minus45, float zero, float plus45, float plus90, float speed ) {}
+  void setInput( float minus90, float minus45, float zero, float plus45, float plus90, float speed, float rotation );
+
+  // feed forward from the input, through the hidden layers, and produce an output
+  void evaluate();
+
+  // outputs
+  float speedAdjust;
+  float rotationAdjust;
 
 private:
-  std::vector< layer > network;
+  std::vector< layer* > network;
 };
 
 #endif

@@ -4,49 +4,46 @@
 #include <random>
 #include <iostream>
 std::string randomString( std::size_t length ){
-    const std::string CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    std::random_device random_device;
-    std::mt19937 generator(random_device());
-    std::uniform_int_distribution<> distribution(0, CHARACTERS.size() - 1);
-
-    std::string random_string;
-    for( std::size_t i = 0; i < length; ++i ){
-      random_string += CHARACTERS[distribution(generator)];
-    }
-
-    return random_string;
+  const std::string CHARACTERS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  std::random_device randomDevice;
+  std::mt19937 generator(randomDevice());
+  std::uniform_int_distribution<> distribution(0, CHARACTERS.size() - 1);
+  std::string randomString;
+  for( std::size_t i = 0; i < length; ++i )
+    randomString += CHARACTERS[distribution(generator)];
+  return randomString;
 }
 
-agent::agent( std::string filename, track* t, SDL_Renderer* r, float scale, float rot, vector2< int >location ){
-  mySprite.setRenderer( r );
-  mySprite.loadFromFile( filename );
-  mySprite.setScaleFactor( scale );
-  mySprite.setRotation( rot );
-  mySprite.setPosition( location );
+agent::agent( track* t, SDL_Renderer* r, float scale, float rot, vector2< float >location ){
+  mySprite = new sprite( r );
 
-  tag = randomString( 10 );
-
+  mySprite->setScaleFactor( scale );
+  mySprite->setRotation( rot );
+  mySprite->setPosition( location );
   setTrack( t );
+
+  tag = randomString( 16 );
+  // std::cout << std::endl << tag << std::endl << std::endl;
 }
 
 void agent::update(){
   if( dead ) return;
+
   updatesSurvived++;
+  mySprite->setPosition( mySprite->getPosition() + speed * rotate2D( vector2< float >( 1, 0), mySprite->getRotation() ) );
 
-  mySprite.setPosition( mySprite.getPosition() + speed * rotate2D( vector2< float >( 1, 0), mySprite.getDirection() ) );
-
-  if( myD <= 0.){
+  if( myD <= 0.){ // I'm die, thank you forever
     dead = true; // forever die, forever fly
-    brain.saveWeightsToFile( std::string( "records/" ) + std::to_string( updatesSurvived ) + std::string( "_" ) + tag );
+    // brain.saveWeightsToFile( std::string( "records/" ) + std::to_string( updatesSurvived ) + std::string( "_" ) + tag );
   }
 }
 
 void agent::draw(){
-  SDL_Renderer * r = mySprite.getRenderer();
+  SDL_Renderer * r = mySprite->getRenderer();
 
   // do some lines
-  vector2< float > agentPosition = vector2< float >( float( mySprite.getPosition().values[ 0 ] ), float( mySprite.getPosition().values[ 1 ] ) );
-  float agentDirection = mySprite.getRotation();
+  vector2< float > agentPosition = vector2< float >( float( mySprite->getPosition().values[ 0 ] ), float( mySprite->getPosition().values[ 1 ] ) );
+  float agentDirection = mySprite->getRotation();
   vector2< float > directionVector = rotate2D( vector2< float >( 1, 0 ), agentDirection );
 
   // makes the below easier to reference
@@ -104,13 +101,13 @@ void agent::draw(){
     drawRect = { sx - 10, sy - 10, 20, 20 };
     SDL_SetRenderDrawColor( r, 255, 0, 0, 255 );
     SDL_RenderDrawRect( r, &drawRect );
-    mySprite.setScaleFactor( 0.2617f );
+    mySprite->setScaleFactor( 0.2617f );
   }else{
-    mySprite.setScaleFactor( 0.1618f );
+    mySprite->setScaleFactor( 0.1618f );
   }
 
   // draw the sprite over the lines
-  mySprite.draw();
+  mySprite->draw();
 }
 
 float agent::raymarchVector( vector2< float > origin, vector2< float > direction ){
@@ -125,8 +122,8 @@ float agent::raymarchVector( vector2< float > origin, vector2< float > direction
 }
 
 void agent::raymarchDistances(){
-  vector2< float > origin = vector2< float >( mySprite.getPosition().values[ 0 ], mySprite.getPosition().values[ 1 ] );
-  vector2< float > direction = rotate2D( vector2< float >( 1, 0 ), mySprite.getRotation() );
+  vector2< float > origin = vector2< float >( mySprite->getPosition().values[ 0 ], mySprite->getPosition().values[ 1 ] );
+  vector2< float > direction = rotate2D( vector2< float >( 1, 0 ), mySprite->getRotation() );
 
   myD = myTrack->dQuery( origin );
 

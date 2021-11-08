@@ -16,11 +16,11 @@ app::app( int argc, char** argv ) {
   // distributions for the PRNG
   std::uniform_real_distribution< float > scalarDist( 0.01, 1. );
   std::uniform_real_distribution< float > rotationDist( 0.0, 360.0 );
-  std::uniform_int_distribution< int > positionXDist( 0, windowWidth );
-  std::uniform_int_distribution< int > positionYDist( 0, windowHeight );
+  std::uniform_real_distribution< float > positionXDist( 0, float( windowWidth ) );
+  std::uniform_real_distribution< float > positionYDist( 0, float( windowHeight ) );
 
   for( int i = 0; i < numAgents; i++ ){
-    agent a( "sprite.png", myTrack, renderer, 0.1618f, rotationDist( gen ), vector2< int >( positionXDist( gen ), positionYDist( gen ) ) );
+    agent a( myTrack, renderer, 0.1618f, rotationDist( gen ), vector2< float >( positionXDist( gen ), positionYDist( gen ) ) );
     agents.push_back(a);
   }
 }
@@ -45,7 +45,7 @@ bool app::mainLoop(){
       // agent.mySprite.setRotation( time * 0.1 );
       agent.rotationAdjust( 0.1 );
       agent.raymarchDistances();
-      // agent.update();
+      agent.update();
     }
     agent.draw();
   }

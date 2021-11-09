@@ -33,6 +33,13 @@ void agent::update(){
   brain.setInput( m90, m45, zero, p45, p90, speed, mySprite->getRotation() );
   brain.evaluate();
 
+  speed += brain.speedAdjust;
+  rotationAdjust( brain.rotationAdjust );
+
+  speed = std::clamp( speed, 0.f, 0.05f );
+
+  if( !dead ) std::cout << " outputs for " << tag << " " << brain.speedAdjust << " " << brain.rotationAdjust << std::endl << std::endl;
+
   mySprite->setPosition( mySprite->getPosition() + speed * rotate2D( vector2< float >( 1, 0), mySprite->getRotation() ) );
 
   if( myD <= 0.){ // I'm die, thank you forever

@@ -9,18 +9,8 @@ app::app( int argc, char** argv ) {
   // create the track
   myTrack = new track( renderer );
 
-  // seeding the PRNG
-  std::random_device rd;
-  std::mt19937 gen(rd());
-
-  // distributions for the PRNG
-  std::uniform_real_distribution< float > scalarDist( 0.01, 1. );
-  std::uniform_real_distribution< float > rotationDist( 0.0, 360.0 );
-  std::uniform_real_distribution< float > positionXDist( 0, float( windowWidth ) );
-  std::uniform_real_distribution< float > positionYDist( 0, float( windowHeight ) );
-
   for( int i = 0; i < numAgents; i++ ){
-    agent a( myTrack, renderer, 0.1618f, rotationDist( gen ), vector2< float >( positionXDist( gen ), positionYDist( gen ) ) );
+    agent a( myTrack, renderer, 0.1618f, 0.0f, vector2< float >( 100, 100 ) );
     agents.push_back(a);
   }
 }
@@ -30,7 +20,7 @@ bool app::mainLoop(){
   // int time = SDL_GetTicks();
 
   // pause function, prevents the agent update function from running
-  static bool runSim = true;
+  static bool runSim = false;
 
   // clear framebuffer to opaque black
   SDL_SetRenderDrawColor( renderer, 0, 0, 0, 255 );
@@ -39,16 +29,17 @@ bool app::mainLoop(){
   // draw the background - this is the grayscale track distance representation
   myTrack->draw();
 
+  std::cout << std::endl;
+
   // iterate through list of agents, and draw their associated sprites
   for( auto& agent : agents ){
     if( runSim ){
-      // agent.mySprite.setRotation( time * 0.1 );
-      agent.rotationAdjust( 0.01 );
       agent.raymarchDistances();
       agent.update();
     }
     agent.draw();
   }
+  std::cout << std::flush;
 
   // present the accumulated state of the renderer to the viewer
   SDL_RenderPresent( renderer );

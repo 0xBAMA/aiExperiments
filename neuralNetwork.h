@@ -52,6 +52,9 @@ public:
   // generate completely random weights and biases in the range [ -range, range ]
   void generateRandomWeights( float range );
 
+  // adjust weights
+  void weightBump( float bump );
+
   // update the input neurons (this is the first layer)
   void setInput( float minus90, float minus45, float zero, float plus45, float plus90, float speed, float rotation );
 
@@ -62,7 +65,8 @@ public:
   float speedAdjust;
   float rotationAdjust;
 
-  float adjustScalar = 0.1;
+  float speedAdjustScalar    = 0.5;
+  float rotationAdjustScalar = 0.1;
 
 private:
   std::vector< layer* > network;

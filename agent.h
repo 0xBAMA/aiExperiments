@@ -33,7 +33,7 @@ public:
 private:
   float raymarchVector( vector2< float > origin, vector2< float > direction );
   float m90, m45, zero, p45, p90;
-  float myD, speed = 0.01;
+  float myD, speed = 0.0;
 
   sprite* mySprite;
   track* myTrack = NULL;

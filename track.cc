@@ -6,10 +6,10 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
   std::vector< SDFBase* > primitives;
 
   primitives.push_back( new circle( vector2< float >( windowWidth / 2., windowHeight / 4. ), 150., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( windowWidth - 100., 100. ), 60., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., 100. ), vector2< float >( windowWidth - 100., windowHeight - 100 ), 60., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., windowHeight - 100 ), vector2< float >( 100., windowHeight - 100 ), 60., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 100., windowHeight - 100 ), vector2< float >( 100., 100. ), 60., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( windowWidth - 100., 100. ), 100., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., 100. ), vector2< float >( windowWidth - 100., windowHeight - 100 ), 100., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., windowHeight - 100 ), vector2< float >( 100., windowHeight - 100 ), 100., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( 100., windowHeight - 100 ), vector2< float >( 100., 100. ), 100., false ) );
 
   // produce the float array of distance values, to cache distance for all points on the map
   for( int x = 0; x < windowWidth;  x++ )
@@ -37,8 +37,12 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
   SDL_UpdateTexture( myTexture, NULL, &v[ 0 ], 4 * windowWidth );
 }
 
+bool oob( vector2< float > p ){
+  return ( p.values[ 0 ] < 0 || p.values[ 0 ] > windowWidth - 1 || p.values[ 1 ] < 0 || p.values[ 1 ] > windowHeight - 1 );
+}
+
 float track::dQuery( vector2< float > queryPoint ){
-  // do we want to do at least bilinear interpolation? maybe bicubic, if feeling spicy
+  if( oob( queryPoint ) ) return 0;
   return -distanceMap[ int( queryPoint.values[ 0 ] ) ][ int( queryPoint.values[ 1 ] ) ];
 }
 

@@ -65,8 +65,8 @@ public:
   float speedAdjust;
   float rotationAdjust;
 
-  float speedAdjustScalar    = 0.5;
-  float rotationAdjustScalar = 0.1;
+  float speedAdjustScalar    = 0.7;
+  float rotationAdjustScalar = 0.2;
 
 private:
   std::vector< layer* > network;

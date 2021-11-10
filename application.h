@@ -25,12 +25,15 @@ public:
   app( int argc, char** argv );
   ~app();
 
+  void init();
+
   bool mainLoop();
 
 private:
   SDL_Window* window;
   SDL_Renderer* renderer;
   std::vector< agent > agents;
+  std::vector< agent > parents;
   track* myTrack = NULL;
 };
 

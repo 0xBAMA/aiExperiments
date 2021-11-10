@@ -112,6 +112,19 @@ void neuralNetwork::loadWeightsFromFile( std::string filename ){
 
 void neuralNetwork::weightBump( float bump ){
   // take existing weights and add a random quantity in the range [ -bump, bump ]
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution< float > d( -bump, bump );
+  std::uniform_int_distribution< int > d2( 0, 5 );
+
+  for( unsigned int i = 1; i < network.size(); i++ ){
+    for( int j = 0; j < network[ i ]->size(); j++ ){
+      network[ i ]->neurons[ j ].bias += d( gen );
+      for( int k = 0; k < network[ i - 1 ]->size(); k++){
+        network[ i ]->neurons[ j ].weights[ k ] += d( gen );
+      }
+    }
+  }
 }
 
 void neuralNetwork::setInput( float minus90, float minus45, float zero, float plus45, float plus90, float speed, float rotation ){

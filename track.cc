@@ -6,10 +6,10 @@ track::track( SDL_Renderer* r ) : myRenderer( r ) {
   std::vector< SDFBase* > primitives;
 
   primitives.push_back( new circle( vector2< float >( windowWidth / 2., windowHeight / 4. ), 150., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( windowWidth - 100., 100. ), 100., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., 100. ), vector2< float >( windowWidth - 100., windowHeight - 100 ), 100., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., windowHeight - 100 ), vector2< float >( 100., windowHeight - 100 ), 100., false ) );
-  primitives.push_back( new lineSegment( vector2< float >( 100., windowHeight - 100 ), vector2< float >( 100., 100. ), 100., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( 100., 100. ), vector2< float >( windowWidth - 100., 100. ), 75., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., 100. ), vector2< float >( windowWidth - 100., windowHeight - 100 ), 75., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( windowWidth - 100., windowHeight - 100 ), vector2< float >( 100., windowHeight - 100 ), 75., false ) );
+  primitives.push_back( new lineSegment( vector2< float >( 100., windowHeight - 100 ), vector2< float >( 100., 100. ), 75., false ) );
 
   // produce the float array of distance values, to cache distance for all points on the map
   for( int x = 0; x < windowWidth;  x++ )

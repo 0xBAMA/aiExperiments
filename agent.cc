@@ -36,9 +36,9 @@ void agent::update(){
   speed += brain.speedAdjust;
   rotationAdjust( brain.rotationAdjust );
 
-  speed = std::clamp( speed, 0.f, 0.05f );
+  speed = std::clamp( speed, 0.f, 0.1f );
 
-  if( !dead ) std::cout << " outputs for " << tag << " " << brain.speedAdjust << " " << brain.rotationAdjust << std::endl << std::endl;
+  // if( !dead ) std::cout << " outputs for " << tag << " " << brain.speedAdjust << " " << brain.rotationAdjust << std::endl << std::endl;
 
   mySprite->setPosition( mySprite->getPosition() + speed * rotate2D( vector2< float >( 1, 0), mySprite->getRotation() ) );
 

@@ -15,18 +15,25 @@ public:
 
   void update();
   void draw();
-  void setTrack( track* t ) { myTrack = t; }
+  void setTrack( track* t )                   { myTrack = t; }
 
-  float getRotation(){ return mySprite->getRotation(); }
-  void setRotation( float set ){ mySprite->setRotation( set ); }
-  void rotationAdjust( float adj ){ mySprite->setRotation( getRotation() + adj ); }
+  float getRotation()                         { return mySprite->getRotation(); }
+  void setRotation( float set )               { mySprite->setRotation( set ); }
+  void rotationAdjust( float adj )            { mySprite->setRotation( getRotation() + adj ); }
 
-  void setPosition( vector2< float >newPos ){ mySprite->setPosition( { newPos.values[ 0 ], newPos.values[ 1 ] } ); }
-  vector2< float > getPosition(){ return vector2< float >( mySprite->getPosition().values[ 0 ], mySprite->getPosition().values[ 1 ] ); }
+  void setPosition( vector2< float >newPos )  { mySprite->setPosition( { newPos.values[ 0 ], newPos.values[ 1 ] } ); }
+  vector2< float > getPosition()              { return vector2< float >( mySprite->getPosition().values[ 0 ], mySprite->getPosition().values[ 1 ] ); }
 
-  std::string getTag(){ return tag; }
-  bool isDead(){ return dead; }
-  void toggleSelected(){ selected = !selected; }
+  std::string getTag()                        { return tag; }
+  bool isDead()                               { return dead; }
+  void toggleSelected()                       { selected = !selected; }
+  bool isSelected()                           { return selected; }
+
+  void bumpBrain( float amount )              { brain.weightBump( amount ); }
+  void setBrain( neuralNetwork in )           { brain = in; }
+  neuralNetwork getBrain()                    { return brain; }
+
+
 
   void raymarchDistances();
 
